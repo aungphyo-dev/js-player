@@ -5,11 +5,11 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-
+./idea
 # testing
 /coverage
 
-# next.js
+# next.[id]
 /.next/
 /out/
 
