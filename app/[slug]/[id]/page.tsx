@@ -22,12 +22,12 @@ const Page = ({
     <div className='prose-quoteless prose prose-invert flex min-h-screen flex-col pt-[65px]'>
       <MdxViewer source={question.content} />
       <div className='mt-auto flex w-full items-center justify-between py-8'>
-        <Link href={`/javascript/${+id === 1 ? 1 : +id - 1}`}>
+        <Link href={`/javascript/${+id === 1 ? 1 : +id - 1}?maxLength=${maxLength}`}>
           <Button variant='ghost' size='icon'>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
         </Link>
-        <Link href={id == maxLength ? `/javascript` : `/javascript/${+id + 1}`}>
+        <Link href={id == maxLength ? `/javascript` : `/javascript/${+id + 1}?maxLength=${maxLength}`}>
           <Button variant='ghost' size='icon'>
             <ChevronRightIcon className='h-4 w-4' />
           </Button>
