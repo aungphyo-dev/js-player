@@ -1,0 +1,33 @@
+###### 72. What's the output?
+
+```javascript
+console.log(String.raw`Hello\nworld`);
+```
+
+- A: `Hello world!`
+- B: `Hello` <br />&nbsp; &nbsp; &nbsp;`world`
+- C: `Hello\nworld`
+- D: `Hello\n` <br /> &nbsp; &nbsp; &nbsp;`world`
+
+<details>
+<summary>
+<b>Answer</b>
+</summary>
+
+#### Answer: C
+
+`String.raw` returns a string where the escapes (`\n`, `\v`, `\t` etc.) are ignored! Backslashes can be an issue since you could end up with something like:
+
+`` const path = `C:\Documents\Projects\table.html` ``
+
+Which would result in:
+
+`"C:DocumentsProjects able.html"`
+
+With `String.raw`, it would simply ignore the escape and print:
+
+`C:\Documents\Projects\table.html`
+
+In this case, the string is `Hello\nworld`, which gets logged.
+
+</details>
