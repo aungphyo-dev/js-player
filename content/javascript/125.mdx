@@ -1,26 +1,25 @@
-###### 123. What's the output?
+###### 125. What's the output?
 
 ```javascript
-const add = (x) => (y) => (z) => {
+const myFunc = ({ x, y, z }) => {
   console.log(x, y, z);
-  return x + y + z;
 };
 
-add(4)(5)(6);
+myFunc(1, 2, 3);
 ```
 
-- A: `4` `5` `6`
-- B: `6` `5` `4`
-- C: `4` `function` `function`
-- D: `undefined` `undefined` `6`
+- A: `1` `2` `3`
+- B: `{1: 1}` `{2: 2}` `{3: 3}`
+- C: `{ 1: undefined }` `undefined` `undefined`
+- D: `undefined` `undefined` `undefined`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: D
 
-The `add` function returns an arrow function, which returns an arrow function, which returns an arrow function (still with me?). The first function receives an argument `x` with the value of `4`. We invoke the second function, which receives an argument `y` with the value `5`. Then we invoke the third function, which receives an argument `z` with the value `6`. When we're trying to access the value `x`, `y` and `z` within the last arrow function, the JS engine goes up the scope chain in order to find the values for `x` and `y` accordingly. This returns `4` `5` `6`.
+`myFunc` expects an object with properties `x`, `y` and `z` as its argument. Since we're only passing three separate numeric values (1, 2, 3) instead of one object with properties `x`, `y` and `z` ({x: 1, y: 2, z: 3}), `x`, `y` and `z` have their default value of `undefined`.
 
 </details>

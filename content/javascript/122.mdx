@@ -1,27 +1,26 @@
-###### 120. What's the output?
+###### 122. What's the output?
 
 ```javascript
-const groceries = ['banana', 'apple', 'peanuts'];
+const name = 'Lydia Hallie';
 
-if (groceries.indexOf('banana')) {
-  console.log('We have to buy bananas!');
-} else {
-  console.log(`We don't have to buy bananas!`);
-}
+console.log(!typeof name === 'object');
+console.log(!typeof name === 'string');
 ```
 
-- A: We have to buy bananas!
-- B: We don't have to buy bananas
-- C: `undefined`
-- D: `1`
+- A: `false` `true`
+- B: `true` `false`
+- C: `false` `false`
+- D: `true` `true`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: B
+#### Answer: C
 
-We passed the condition `groceries.indexOf("banana")` to the if-statement. `groceries.indexOf("banana")` returns `0`, which is a falsy value. Since the condition in the if-statement is falsy, the code in the `else` block runs, and `We don't have to buy bananas!` gets logged.
+`typeof name` returns `"string"`. The string `"string"` is a truthy value, so `!typeof name` returns the boolean value `false`. `false === "object"` and `false === "string"` both return`false`.
+
+(If we wanted to check whether the type was (un)equal to a certain type, we should've written `!==` instead of `!typeof`)
 
 </details>

@@ -1,17 +1,21 @@
-###### 101. What's the value of output?
+###### 103. What's the value of output?
 
 ```javascript
-const one = false || {} || null;
-const two = null || false || '';
-const three = [] || 0 || true;
+const set = new Set();
 
-console.log(one, two, three);
+set.add(1);
+set.add('Lydia');
+set.add({ name: 'Lydia' });
+
+for (let item of set) {
+  console.log(item + 2);
+}
 ```
 
-- A: `false` `null` `[]`
-- B: `null` `""` `true`
-- C: `{}` `""` `[]`
-- D: `null` `null` `true`
+- A: `3`, `NaN`, `NaN`
+- B: `3`, `7`, `NaN`
+- C: `3`, `Lydia2`, `[object Object]2`
+- D: `"12"`, `Lydia2`, `[object Object]2`
 
 <details>
 <summary>
@@ -20,12 +24,12 @@ console.log(one, two, three);
 
 #### Answer: C
 
-With the `||` operator, we can return the first truthy operand. If all values are falsy, the last operand gets returned.
+The `+` operator is not only used for adding numerical values, but we can also use it to concatenate strings. Whenever the JavaScript engine sees that one or more values are not a number, it coerces the number into a string.
 
-`(false || {} || null)`: the empty object `{}` is a truthy value. This is the first (and only) truthy value, which gets returned. `one` is equal to `{}`.
+The first one is `1`, which is a numerical value. `1 + 2` returns the number 3.
 
-`(null || false || "")`: all operands are falsy values. This means that the last operand, `""` gets returned. `two` is equal to `""`.
+However, the second one is a string `"Lydia"`. `"Lydia"` is a string and `2` is a number: `2` gets coerced into a string. `"Lydia"` and `"2"` get concatenated, which results in the string `"Lydia2"`.
 
-`([] || 0 || "")`: the empty array`[]` is a truthy value. This is the first truthy value, which gets returned. `three` is equal to `[]`.
+`{ name: "Lydia" }` is an object. Neither a number nor an object is a string, so it stringifies both. Whenever we stringify a regular object, it becomes `"[object Object]"`. `"[object Object]"` concatenated with `"2"` becomes `"[object Object]2"`.
 
 </details>

@@ -1,43 +1,26 @@
-###### 141. What's the output?
+###### 143. Which of the options result(s) in an error?
 
 ```javascript
-const person = {
-  name: 'Lydia Hallie',
-  hobbies: ['coding'],
-};
+const emojis = ['🎄', '🎅🏼', '🎁', '⭐'];
 
-function addHobby(hobby, hobbies = person.hobbies) {
-  hobbies.push(hobby);
-  return hobbies;
-}
-
-addHobby('running', []);
-addHobby('dancing');
-addHobby('baking', person.hobbies);
-
-console.log(person.hobbies);
+/* 1 */ emojis.push('🦌');
+/* 2 */ emojis.splice(0, 2);
+/* 3 */ emojis = [...emojis, '🥂'];
+/* 4 */ emojis.length = 0;
 ```
 
-- A: `["coding"]`
-- B: `["coding", "dancing"]`
-- C: `["coding", "dancing", "baking"]`
-- D: `["coding", "running", "dancing", "baking"]`
+- A: 1
+- B: 1 and 2
+- C: 3 and 4
+- D: 3
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: D
 
-The `addHobby` function receives two arguments, `hobby` and `hobbies` with the default value of the `hobbies` array on the `person` object.
-
-First, we invoke the `addHobby` function, and pass `"running"` as the value for `hobby` and an empty array as the value for `hobbies`. Since we pass an empty array as the value for `hobbies`, `"running"` gets added to this empty array.
-
-Then, we invoke the `addHobby` function, and pass `"dancing"` as the value for `hobby`. We didn't pass a value for `hobbies`, so it gets the default value, the `hobbies` property on the `person` object. We push the hobby `dancing` to the `person.hobbies` array.
-
-Last, we invoke the `addHobby` function, and pass `"baking"` as the value for `hobby`, and the `person.hobbies` array as the value for `hobbies`. We push the hobby `baking` to the `person.hobbies` array.
-
-After pushing `dancing` and `baking`, the value of `person.hobbies` is `["coding", "dancing", "baking"]`
+The `const` keyword simply means we cannot _redeclare_ the value of that variable, it's _read-only_. However, the value itself isn't immutable. The properties on the `emojis` array can be modified, for example by pushing new values, splicing them, or setting the length of the array to 0.
 
 </details>

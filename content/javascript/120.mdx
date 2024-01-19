@@ -1,16 +1,19 @@
-###### 118. What's the output?
+###### 120. What's the output?
 
 ```javascript
-let num = 1;
-const list = ['🥳', '🤠', '🥰', '🤪'];
+const groceries = ['banana', 'apple', 'peanuts'];
 
-console.log(list[(num += 1)]);
+if (groceries.indexOf('banana')) {
+  console.log('We have to buy bananas!');
+} else {
+  console.log(`We don't have to buy bananas!`);
+}
 ```
 
-- A: `🤠`
-- B: `🥰`
-- C: `SyntaxError`
-- D: `ReferenceError`
+- A: We have to buy bananas!
+- B: We don't have to buy bananas
+- C: `undefined`
+- D: `1`
 
 <details>
 <summary>
@@ -19,6 +22,6 @@ console.log(list[(num += 1)]);
 
 #### Answer: B
 
-With the `+=` operator, we're incrementing the value of `num` by `1`. `num` had the initial value `1`, so `1 + 1` is `2`. The item on the second index in the `list` array is 🥰, `console.log(list[2])` prints 🥰.
+We passed the condition `groceries.indexOf("banana")` to the if-statement. `groceries.indexOf("banana")` returns `0`, which is a falsy value. Since the condition in the if-statement is falsy, the code in the `else` block runs, and `We don't have to buy bananas!` gets logged.
 
 </details>

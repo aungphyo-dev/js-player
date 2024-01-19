@@ -1,31 +1,19 @@
-###### 148. What's the output?
+###### 150. What's the output?
 
 ```javascript
-const user = {
-  email: 'e@mail.com',
-  password: '12345',
-};
+const animals = {};
+let dog = { emoji: '🐶' };
+let cat = { emoji: '🐈' };
 
-const updateUser = ({ email, password }) => {
-  if (email) {
-    Object.assign(user, { email });
-  }
+animals[dog] = { ...dog, name: 'Mara' };
+animals[cat] = { ...cat, name: 'Sara' };
 
-  if (password) {
-    user.password = password;
-  }
-
-  return user;
-};
-
-const updatedUser = updateUser({ email: 'new@email.com' });
-
-console.log(updatedUser === user);
+console.log(animals[dog]);
 ```
 
-- A: `false`
-- B: `true`
-- C: `TypeError`
+- A: `{ emoji: "🐶", name: "Mara" }`
+- B: `{ emoji: "🐈", name: "Sara" }`
+- C: `undefined`
 - D: `ReferenceError`
 
 <details>
@@ -35,6 +23,12 @@ console.log(updatedUser === user);
 
 #### Answer: B
 
-The `updateUser` function updates the values of the `email` and `password` properties on user, if their values are passed to the function, after which the function returns the `user` object. The returned value of the `updateUser` function is the `user` object, which means that the value of updatedUser is a reference to the same `user` object that `user` points to. `updatedUser === user` equals `true`.
+Object keys are converted to strings.
+
+Since the value of `dog` is an object, `animals[dog]` actually means that we’re creating a new property called `"[object Object]"` equal to the new object. `animals["[object Object]"]` is now equal to `{ emoji: "🐶", name: "Mara"}`.
+
+`cat` is also an object, which means that `animals[cat]` actually means that we’re overwriting the value of `animals["[object Object]"]` with the new cat properties.
+
+Logging `animals[dog]`, or actually `animals["[object Object]"]` since converting the `dog` object to a string results `"[object Object]"`, returns the `{ emoji: "🐈", name: "Sara" }`.
 
 </details>

@@ -1,25 +1,19 @@
-###### 112. What's the output?
+###### 114. What will happen?
 
 ```javascript
-function* generatorOne() {
-  yield ['a', 'b', 'c'];
-}
+let config = {
+  alert: setInterval(() => {
+    console.log('Alert!');
+  }, 1000),
+};
 
-function* generatorTwo() {
-  yield* ['a', 'b', 'c'];
-}
-
-const one = generatorOne();
-const two = generatorTwo();
-
-console.log(one.next().value);
-console.log(two.next().value);
+config = null;
 ```
 
-- A: `a` and `a`
-- B: `a` and `undefined`
-- C: `['a', 'b', 'c']` and `a`
-- D: `a` and `['a', 'b', 'c']`
+- A: The `setInterval` callback won't be invoked
+- B: The `setInterval` callback gets invoked once
+- C: The `setInterval` callback will still be called every second
+- D: We never invoked `config.alert()`, config is `null`
 
 <details>
 <summary>
@@ -28,22 +22,10 @@ console.log(two.next().value);
 
 #### Answer: C
 
-With the `yield` keyword, we `yield` values in a generator function. With the `yield*` keyword, we can yield values from another generator function, or iterable object (for example an array).
-
-In `generatorOne`, we yield the entire array `['a', 'b', 'c']` using the `yield` keyword. The value of `value` property on the object returned by the `next` method on `one` (`one.next().value`) is equal to the entire array `['a', 'b', 'c']`.
-
-```javascript
-console.log(one.next().value); // ['a', 'b', 'c']
-console.log(one.next().value); // undefined
-```
-
-In `generatorTwo`, we use the `yield*` keyword. This means that the first yielded value of `two`, is equal to the first yielded value in the iterator. The iterator is the array `['a', 'b', 'c']`. The first yielded value is `a`, so the first time we call `two.next().value`, `a` is returned.
-
-```javascript
-console.log(two.next().value); // 'a'
-console.log(two.next().value); // 'b'
-console.log(two.next().value); // 'c'
-console.log(two.next().value); // undefined
-```
+Normally when we set objects equal to `null`, those objects get _garbage collected_ as there is no reference anymore to that object. However, since the callback function within `setInterval` is an arrow function (thus bound to the `config` object), the callback function still holds a reference to the `config` object.
+As long as there is a reference, the object won't get garbage collected.
+Since this is an interval, setting `config` to `null` or `delete`-ing `config.alert` won't garbage-collect the interval, so the interval will still be called.
+It should be cleared with `clearInterval(config.alert)` to remove it from memory.
+Since it was not cleared, the `setInterval` callback function will still get invoked every 1000ms (1s).
 
 </details>

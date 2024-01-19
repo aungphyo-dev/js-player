@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang='en'>
       <body
         suppressHydrationWarning
-        className={`${inter.className} mx-auto  max-w-screen-md bg-slate-900 px-3  md:px-6`}
+        className={`${inter.className} mx-auto  max-w-screen-md bg-slate-800 px-3  md:px-6`}
       >
         {children}
       </body>

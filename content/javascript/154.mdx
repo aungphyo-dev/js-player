@@ -1,34 +1,32 @@
-###### 152. What's the output?
+###### 154. What's the output?
 
 ```javascript
-const promise1 = Promise.resolve('First');
-const promise2 = Promise.resolve('Second');
-const promise3 = Promise.reject('Third');
-const promise4 = Promise.resolve('Fourth');
+const createMember = ({ email, address = {} }) => {
+  const validEmail = /.+\@.+\..+/.test(email);
+  if (!validEmail) throw new Error('Valid email pls');
 
-const runPromises = async () => {
-  const res1 = await Promise.all([promise1, promise2]);
-  const res2 = await Promise.all([promise3, promise4]);
-  return [res1, res2];
+  return {
+    email,
+    address: address ? address : null,
+  };
 };
 
-runPromises()
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
+const member = createMember({ email: 'my@email.com' });
+console.log(member);
 ```
 
-- A: `[['First', 'Second'], ['Fourth']]`
-- B: `[['First', 'Second'], ['Third', 'Fourth']]`
-- C: `[['First', 'Second']]`
-- D: `'Third'`
+- A: `{ email: "my@email.com", address: null }`
+- B: `{ email: "my@email.com" }`
+- C: `{ email: "my@email.com", address: {} }`
+- D: `{ email: "my@email.com", address: undefined }`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: D
+#### Answer: C
 
-The `Promise.all` method runs the passed promises in parallel. If one promise fails, the `Promise.all` method _rejects_ with the value of the rejected promise. In this case, `promise3` rejected with the value `"Third"`. We’re catching the rejected value in the chained `catch` method on the `runPromises` invocation to catch any errors within the `runPromises` function. Only `"Third"` gets logged, since `promise3` rejected with this value.
+The default value of `address` is an empty object `{}`. When we set the variable `member` equal to the object returned by the `createMember` function, we didn't pass a value for address, which means that the value of address is the default empty object `{}`. An empty object is a truthy value, which means that the condition of the `address ? address : null` conditional returns `true`. The value of address is the empty object `{}`.
 
 </details>

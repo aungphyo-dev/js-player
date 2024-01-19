@@ -1,31 +1,29 @@
-###### 84. What is the output?
+###### 86. Which option is a way to set `hasName` equal to `true`, provided you cannot pass `true` as an argument?
 
 ```javascript
-function checkAge(age) {
-  if (age < 18) {
-    const message = "Sorry, you're too young.";
-  } else {
-    const message = "Yay! You're old enough!";
-  }
-
-  return message;
+function getName(name) {
+  const hasName = //
 }
-
-console.log(checkAge(21));
 ```
 
-- A: `"Sorry, you're too young."`
-- B: `"Yay! You're old enough!"`
-- C: `ReferenceError`
-- D: `undefined`
+- A: `!!name`
+- B: `name`
+- C: `new Boolean(name)`
+- D: `name.length`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: A
 
-Variables with the `const` and `let` keyword are _block-scoped_. A block is anything between curly brackets (`{ }`). In this case, the curly brackets of the if/else statements. You cannot reference a variable outside of the block it's declared in, a ReferenceError gets thrown.
+With `!!name`, we determine whether the value of `name` is truthy or falsy. If name is truthy, which we want to test for, `!name` returns `false`. `!false` (which is what `!!name` practically is) returns `true`.
+
+By setting `hasName` equal to `name`, you set `hasName` equal to whatever value you passed to the `getName` function, not the boolean value `true`.
+
+`new Boolean(true)` returns an object wrapper, not the boolean value itself.
+
+`name.length` returns the length of the passed argument, not whether it's `true`.
 
 </details>

@@ -1,16 +1,24 @@
-###### 122. What's the output?
+###### 124. What's the output?
 
 ```javascript
-const name = 'Lydia Hallie';
+async function* range(start, end) {
+  for (let i = start; i <= end; i++) {
+    yield Promise.resolve(i);
+  }
+}
 
-console.log(!typeof name === 'object');
-console.log(!typeof name === 'string');
+(async () => {
+  const gen = range(1, 3);
+  for await (const item of gen) {
+    console.log(item);
+  }
+})();
 ```
 
-- A: `false` `true`
-- B: `true` `false`
-- C: `false` `false`
-- D: `true` `true`
+- A: `Promise {1}` `Promise {2}` `Promise {3}`
+- B: `Promise {<pending>}` `Promise {<pending>}` `Promise {<pending>}`
+- C: `1` `2` `3`
+- D: `undefined` `undefined` `undefined`
 
 <details>
 <summary>
@@ -19,8 +27,6 @@ console.log(!typeof name === 'string');
 
 #### Answer: C
 
-`typeof name` returns `"string"`. The string `"string"` is a truthy value, so `!typeof name` returns the boolean value `false`. `false === "object"` and `false === "string"` both return`false`.
-
-(If we wanted to check whether the type was (un)equal to a certain type, we should've written `!==` instead of `!typeof`)
+The generator function `range` returns an async object with promises for each item in the range we pass: `Promise{1}`, `Promise{2}`, `Promise{3}`. We set the variable `gen` equal to the async object, after which we loop over it using a `for await ... of` loop. We set the variable `item` equal to the returned Promise values: first `Promise{1}`, then `Promise{2}`, then `Promise{3}`. Since we're _awaiting_ the value of `item`, the resolved promise, the resolved _values_ of the promises get returned: `1`, `2`, then `3`.
 
 </details>

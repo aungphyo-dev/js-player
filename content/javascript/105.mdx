@@ -1,35 +1,37 @@
-###### 103. What's the value of output?
+###### 105. What's its value?
 
 ```javascript
-const set = new Set();
-
-set.add(1);
-set.add('Lydia');
-set.add({ name: 'Lydia' });
-
-for (let item of set) {
-  console.log(item + 2);
+function compareMembers(person1, person2 = person) {
+  if (person1 !== person2) {
+    console.log('Not the same!');
+  } else {
+    console.log('They are the same!');
+  }
 }
+
+const person = { name: 'Lydia' };
+
+compareMembers(person);
 ```
 
-- A: `3`, `NaN`, `NaN`
-- B: `3`, `7`, `NaN`
-- C: `3`, `Lydia2`, `[object Object]2`
-- D: `"12"`, `Lydia2`, `[object Object]2`
+- A: `Not the same!`
+- B: `They are the same!`
+- C: `ReferenceError`
+- D: `SyntaxError`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: B
 
-The `+` operator is not only used for adding numerical values, but we can also use it to concatenate strings. Whenever the JavaScript engine sees that one or more values are not a number, it coerces the number into a string.
+Objects are passed by reference. When we check objects for strict equality (`===`), we're comparing their references.
 
-The first one is `1`, which is a numerical value. `1 + 2` returns the number 3.
+We set the default value for `person2` equal to the `person` object, and passed the `person` object as the value for `person1`.
 
-However, the second one is a string `"Lydia"`. `"Lydia"` is a string and `2` is a number: `2` gets coerced into a string. `"Lydia"` and `"2"` get concatenated, which results in the string `"Lydia2"`.
+This means that both values have a reference to the same spot in memory, thus they are equal.
 
-`{ name: "Lydia" }` is an object. Neither a number nor an object is a string, so it stringifies both. Whenever we stringify a regular object, it becomes `"[object Object]"`. `"[object Object]"` concatenated with `"2"` becomes `"[object Object]2"`.
+The code block in the `else` statement gets run, and `They are the same!` gets logged.
 
 </details>

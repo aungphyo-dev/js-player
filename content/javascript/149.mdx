@@ -1,34 +1,29 @@
-###### 147. What's the output?
+###### 149. What's the output?
 
 ```javascript
-class Calc {
-  constructor() {
-    this.count = 0;
-  }
+const fruit = ['🍌', '🍊', '🍎'];
 
-  increase() {
-    this.count++;
-  }
-}
+fruit.slice(0, 1);
+fruit.splice(0, 1);
+fruit.unshift('🍇');
 
-const calc = new Calc();
-new Calc().increase();
-
-console.log(calc.count);
+console.log(fruit);
 ```
 
-- A: `0`
-- B: `1`
-- C: `undefined`
-- D: `ReferenceError`
+- A: `['🍌', '🍊', '🍎']`
+- B: `['🍊', '🍎']`
+- C: `['🍇', '🍊', '🍎']`
+- D: `['🍇', '🍌', '🍊', '🍎']`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: C
 
-We set the variable `calc` equal to a new instance of the `Calc` class. Then, we instantiate a new instance of `Calc`, and invoke the `increase` method on this instance. Since the count property is within the constructor of the `Calc` class, the count property is not shared on the prototype of `Calc`. This means that the value of count has not been updated for the instance calc points to, count is still `0`.
+First, we invoke the `slice` method on the fruit array. The slice method does not modify the original array, but returns the value that it sliced off the array: the banana emoji.
+Then, we invoke the `splice` method on the fruit array. The splice method does modify the original array, which means that the fruit array now consists of `['🍊', '🍎']`.
+At last, we invoke the `unshift` method on the `fruit` array, which modifies the original array by adding the provided value, ‘🍇’ in this case, as the first element in the array. The fruit array now consists of `['🍇', '🍊', '🍎']`.
 
 </details>

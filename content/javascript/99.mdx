@@ -1,28 +1,28 @@
-###### 97. What's the output?
+###### 99. What's the output?
 
 ```javascript
-const info = {
-  [Symbol('a')]: 'b',
-};
+const name = 'Lydia';
 
-console.log(info);
-console.log(Object.keys(info));
+console.log(name());
 ```
 
-- A: `{Symbol('a'): 'b'}` and `["{Symbol('a')"]`
-- B: `{}` and `[]`
-- C: `{ a: "b" }` and `["a"]`
-- D: `{Symbol('a'): 'b'}` and `[]`
+- A: `SyntaxError`
+- B: `ReferenceError`
+- C: `TypeError`
+- D: `undefined`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: D
+#### Answer: C
 
-A Symbol is not _enumerable_. The Object.keys method returns all _enumerable_ key properties on an object. The Symbol won't be visible, and an empty array is returned. When logging the entire object, all properties will be visible, even non-enumerable ones.
+The variable `name` holds the value of a string, which is not a function, thus cannot invoke.
 
-This is one of the many qualities of a symbol: besides representing an entirely unique value (which prevents accidental name collision on objects, for example when working with 2 libraries that want to add properties to the same object), you can also "hide" properties on objects this way (although not entirely. You can still access symbols using the `Object.getOwnPropertySymbols()` method).
+TypeErrors get thrown when a value is not of the expected type. JavaScript expected `name` to be a function since we're trying to invoke it. It was a string however, so a TypeError gets thrown: name is not a function!
+
+SyntaxErrors get thrown when you've written something that isn't valid JavaScript, for example when you've written the word `return` as `retrun`.
+ReferenceErrors get thrown when JavaScript isn't able to find a reference to a value that you're trying to access.
 
 </details>

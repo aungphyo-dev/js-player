@@ -1,29 +1,29 @@
-###### 149. What's the output?
+###### 151. What's the output?
 
 ```javascript
-const fruit = ['🍌', '🍊', '🍎'];
+const user = {
+  email: 'my@email.com',
+  updateEmail: (email) => {
+    this.email = email;
+  },
+};
 
-fruit.slice(0, 1);
-fruit.splice(0, 1);
-fruit.unshift('🍇');
-
-console.log(fruit);
+user.updateEmail('new@email.com');
+console.log(user.email);
 ```
 
-- A: `['🍌', '🍊', '🍎']`
-- B: `['🍊', '🍎']`
-- C: `['🍇', '🍊', '🍎']`
-- D: `['🍇', '🍌', '🍊', '🍎']`
+- A: `my@email.com`
+- B: `new@email.com`
+- C: `undefined`
+- D: `ReferenceError`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: A
 
-First, we invoke the `slice` method on the fruit array. The slice method does not modify the original array, but returns the value that it sliced off the array: the banana emoji.
-Then, we invoke the `splice` method on the fruit array. The splice method does modify the original array, which means that the fruit array now consists of `['🍊', '🍎']`.
-At last, we invoke the `unshift` method on the `fruit` array, which modifies the original array by adding the provided value, ‘🍇’ in this case, as the first element in the array. The fruit array now consists of `['🍇', '🍊', '🍎']`.
+The `updateEmail` function is an arrow function, and is not bound to the `user` object. This means that the `this` keyword is not referring to the `user` object, but refers to the global scope in this case. The value of `email` within the `user` object does not get updated. When logging the value of `user.email`, the original value of `my@email.com` gets returned.
 
 </details>

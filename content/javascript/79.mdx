@@ -1,13 +1,21 @@
-###### 77. Is this a pure function?
+###### 79. What is the output?
 
 ```javascript
-function sum(a, b) {
-  return a + b;
+const myLifeSummedUp = ['☕', '💻', '🍷', '🍫'];
+
+for (let item in myLifeSummedUp) {
+  console.log(item);
+}
+
+for (let item of myLifeSummedUp) {
+  console.log(item);
 }
 ```
 
-- A: Yes
-- B: No
+- A: `0` `1` `2` `3` and `"☕"` `"💻"` `"🍷"` `"🍫"`
+- B: `"☕"` `"💻"` `"🍷"` `"🍫"` and `"☕"` `"💻"` `"🍷"` `"🍫"`
+- C: `"☕"` `"💻"` `"🍷"` `"🍫"` and `0` `1` `2` `3`
+- D: `0` `1` `2` `3` and `{0: "☕", 1: "💻", 2: "🍷", 3: "🍫"}`
 
 <details>
 <summary>
@@ -16,8 +24,12 @@ function sum(a, b) {
 
 #### Answer: A
 
-A pure function is a function that _always_ returns the same result, if the same arguments are passed.
+With a _for-in_ loop, we can iterate over **enumerable** properties. In an array, the enumerable properties are the "keys" of array elements, which are actually their indexes. You could see an array as:
 
-The `sum` function always returns the same result. If we pass `1` and `2`, it will _always_ return `3` without side effects. If we pass `5` and `10`, it will _always_ return `15`, and so on. This is the definition of a pure function.
+`{0: "☕", 1: "💻", 2: "🍷", 3: "🍫"}`
+
+Where the keys are the enumerable properties. `0` `1` `2` `3` get logged.
+
+With a _for-of_ loop, we can iterate over **iterables**. An array is an iterable. When we iterate over the array, the variable "item" is equal to the element it's currently iterating over, `"☕"` `"💻"` `"🍷"` `"🍫"` get logged.
 
 </details>

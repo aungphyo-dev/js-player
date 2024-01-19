@@ -1,37 +1,31 @@
-###### 82. What is the output?
+###### 84. What is the output?
 
 ```javascript
-var status = '😎';
+function checkAge(age) {
+  if (age < 18) {
+    const message = "Sorry, you're too young.";
+  } else {
+    const message = "Yay! You're old enough!";
+  }
 
-setTimeout(() => {
-  const status = '😍';
+  return message;
+}
 
-  const data = {
-    status: '🥑',
-    getStatus() {
-      return this.status;
-    },
-  };
-
-  console.log(data.getStatus());
-  console.log(data.getStatus.call(this));
-}, 0);
+console.log(checkAge(21));
 ```
 
-- A: `"🥑"` and `"😍"`
-- B: `"🥑"` and `"😎"`
-- C: `"😍"` and `"😎"`
-- D: `"😎"` and `"😎"`
+- A: `"Sorry, you're too young."`
+- B: `"Yay! You're old enough!"`
+- C: `ReferenceError`
+- D: `undefined`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: B
+#### Answer: C
 
-The value of the `this` keyword is dependent on where you use it. In a **method**, like the `getStatus` method, the `this` keyword refers to _the object that the method belongs to_. The method belongs to the `data` object, so `this` refers to the `data` object. When we log `this.status`, the `status` property on the `data` object gets logged, which is `"🥑"`.
-
-With the `call` method, we can change the object to which the `this` keyword refers. In **functions**, the `this` keyword refers to the _the object that the function belongs to_. We declared the `setTimeout` function on the _global object_, so within the `setTimeout` function, the `this` keyword refers to the _global object_. On the global object, there is a variable called _status_ with the value of `"😎"`. When logging `this.status`, `"😎"` gets logged.
+Variables with the `const` and `let` keyword are _block-scoped_. A block is anything between curly brackets (`{ }`). In this case, the curly brackets of the if/else statements. You cannot reference a variable outside of the block it's declared in, a ReferenceError gets thrown.
 
 </details>

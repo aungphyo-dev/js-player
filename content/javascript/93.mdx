@@ -1,14 +1,19 @@
-###### 91. What's the output?
+###### 93. What's the output?
 
 ```javascript
-let newList = [1, 2, 3].push(4);
+const person = {
+  name: 'Lydia',
+  age: 21,
+};
 
-console.log(newList.push(5));
+for (const [x, y] of Object.entries(person)) {
+  console.log(x, y);
+}
 ```
 
-- A: `[1, 2, 3, 4, 5]`
-- B: `[1, 2, 3, 5]`
-- C: `[1, 2, 3, 4]`
+- A: `name` `Lydia` and `age` `21`
+- B: `["name", "Lydia"]` and `["age", 21]`
+- C: `["name", "age"]` and `undefined`
 - D: `Error`
 
 <details>
@@ -16,10 +21,15 @@ console.log(newList.push(5));
 <b>Answer</b>
 </summary>
 
-#### Answer: D
+#### Answer: A
 
-The `.push` method returns the _new length_ of the array, not the array itself! By setting `newList` equal to `[1, 2, 3].push(4)`, we set `newList` equal to the new length of the array: `4`.
+`Object.entries(person)` returns an array of nested arrays, containing the keys and objects:
 
-Then, we try to use the `.push` method on `newList`. Since `newList` is the numerical value `4`, we cannot use the `.push` method: a TypeError is thrown.
+`[ [ 'name', 'Lydia' ], [ 'age', 21 ] ]`
+
+Using the `for-of` loop, we can iterate over each element in the array, the subarrays in this case. We can destructure the subarrays instantly in the for-of loop, using `const [x, y]`. `x` is equal to the first element in the subarray, `y` is equal to the second element in the subarray.
+
+The first subarray is `[ "name", "Lydia" ]`, with `x` equal to `"name"`, and `y` equal to `"Lydia"`, which get logged.
+The second subarray is `[ "age", 21 ]`, with `x` equal to `"age"`, and `y` equal to `21`, which get logged.
 
 </details>

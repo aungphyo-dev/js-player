@@ -1,24 +1,37 @@
-###### 80. What is the output?
+###### 82. What is the output?
 
 ```javascript
-const list = [1 + 2, 1 * 2, 1 / 2];
-console.log(list);
+var status = '😎';
+
+setTimeout(() => {
+  const status = '😍';
+
+  const data = {
+    status: '🥑',
+    getStatus() {
+      return this.status;
+    },
+  };
+
+  console.log(data.getStatus());
+  console.log(data.getStatus.call(this));
+}, 0);
 ```
 
-- A: `["1 + 2", "1 * 2", "1 / 2"]`
-- B: `["12", 2, 0.5]`
-- C: `[3, 2, 0.5]`
-- D: `[1, 1, 1]`
+- A: `"🥑"` and `"😍"`
+- B: `"🥑"` and `"😎"`
+- C: `"😍"` and `"😎"`
+- D: `"😎"` and `"😎"`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: B
 
-Array elements can hold any value. Numbers, strings, objects, other arrays, null, boolean values, undefined, and other expressions such as dates, functions, and calculations.
+The value of the `this` keyword is dependent on where you use it. In a **method**, like the `getStatus` method, the `this` keyword refers to _the object that the method belongs to_. The method belongs to the `data` object, so `this` refers to the `data` object. When we log `this.status`, the `status` property on the `data` object gets logged, which is `"🥑"`.
 
-The element will be equal to the returned value. `1 + 2` returns `3`, `1 * 2` returns `2`, and `1 / 2` returns `0.5`.
+With the `call` method, we can change the object to which the `this` keyword refers. In **functions**, the `this` keyword refers to the _the object that the function belongs to_. We declared the `setTimeout` function on the _global object_, so within the `setTimeout` function, the `this` keyword refers to the _global object_. On the global object, there is a variable called _status_ with the value of `"😎"`. When logging `this.status`, `"😎"` gets logged.
 
 </details>

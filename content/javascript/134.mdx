@@ -1,46 +1,56 @@
-###### 132. What's the output?
+###### 134. How can we invoke `sum` in `sum.js` from `index.js?`
 
 ```javascript
-class Counter {
-  constructor() {
-    this.count = 0;
-  }
-
-  increment() {
-    this.count++;
-  }
+// sum.js
+export default function sum(x) {
+  return x + x;
 }
 
-const counterOne = new Counter();
-counterOne.increment();
-counterOne.increment();
-
-const counterTwo = counterOne;
-counterTwo.increment();
-
-console.log(counterOne.count);
+// index.js
+import * as sum from './sum';
 ```
 
-- A: `0`
-- B: `1`
-- C: `2`
-- D: `3`
+- A: `sum(4)`
+- B: `sum.sum(4)`
+- C: `sum.default(4)`
+- D: Default aren't imported with `*`, only named exports
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: D
+#### Answer: C
 
-`counterOne` is an instance of the `Counter` class. The counter class contains a `count` property on its constructor, and an `increment` method. First, we invoked the `increment` method twice by calling `counterOne.increment()`. Currently, `counterOne.count` is `2`.
+With the asterisk `*`, we import all exported values from that file, both default and named. If we had the following file:
 
-<img src='https://i.imgur.com/KxLlTm9.png' width='400' />
+```javascript
+// info.js
+export const name = 'Lydia';
+export const age = 21;
+export default 'I love JavaScript';
 
-Then, we create a new variable `counterTwo`, and set it equal to `counterOne`. Since objects interact by reference, we're just creating a new reference to the same spot in memory that `counterOne` points to. Since it has the same spot in memory, any changes made to the object that `counterTwo` has a reference to, also apply to `counterOne`. Currently, `counterTwo.count` is `2`.
+// index.js
+import * as info from './info';
+console.log(info);
+```
 
-We invoke `counterTwo.increment()`, which sets `count` to `3`. Then, we log the count on `counterOne`, which logs `3`.
+The following would get logged:
 
-<img src='https://i.imgur.com/BNBHXmc.png' width='400' />
+```javascript
+{
+  default: "I love JavaScript",
+  name: "Lydia",
+  age: 21
+}
+```
+
+For the `sum` example, it means that the imported value `sum` looks like this:
+
+```javascript
+{ default: function sum(x) { return x + x } }
+```
+
+We can invoke this function, by calling `sum.default`
 
 </details>

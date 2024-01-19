@@ -1,38 +1,28 @@
-###### 95. What's the output?
+###### 97. What's the output?
 
 ```javascript
-function nums(a, b) {
-  if (a > b) console.log('a is bigger');
-  else console.log('b is bigger');
-  return;
-  a + b;
-}
+const info = {
+  [Symbol('a')]: 'b',
+};
 
-console.log(nums(4, 2));
-console.log(nums(1, 2));
+console.log(info);
+console.log(Object.keys(info));
 ```
 
-- A: `a is bigger`, `6` and `b is bigger`, `3`
-- B: `a is bigger`, `undefined` and `b is bigger`, `undefined`
-- C: `undefined` and `undefined`
-- D: `SyntaxError`
+- A: `{Symbol('a'): 'b'}` and `["{Symbol('a')"]`
+- B: `{}` and `[]`
+- C: `{ a: "b" }` and `["a"]`
+- D: `{Symbol('a'): 'b'}` and `[]`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: B
+#### Answer: D
 
-In JavaScript, we don't _have_ to write the semicolon (`;`) explicitly, however the JavaScript engine still adds them after statements. This is called **Automatic Semicolon Insertion**. A statement can for example be variables, or keywords like `throw`, `return`, `break`, etc.
+A Symbol is not _enumerable_. The Object.keys method returns all _enumerable_ key properties on an object. The Symbol won't be visible, and an empty array is returned. When logging the entire object, all properties will be visible, even non-enumerable ones.
 
-Here, we wrote a `return` statement, and another value `a + b` on a _new line_. However, since it's a new line, the engine doesn't know that it's actually the value that we wanted to return. Instead, it automatically added a semicolon after `return`. You could see this as:
-
-```javascript
-return;
-a + b;
-```
-
-This means that `a + b` is never reached, since a function stops running after the `return` keyword. If no value gets returned, like here, the function returns `undefined`. Note that there is no automatic insertion after `if/else` statements!
+This is one of the many qualities of a symbol: besides representing an entirely unique value (which prevents accidental name collision on objects, for example when working with 2 libraries that want to add properties to the same object), you can also "hide" properties on objects this way (although not entirely. You can still access symbols using the `Object.getOwnPropertySymbols()` method).
 
 </details>

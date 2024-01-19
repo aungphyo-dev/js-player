@@ -1,35 +1,38 @@
-###### 93. What's the output?
+###### 95. What's the output?
 
 ```javascript
-const person = {
-  name: 'Lydia',
-  age: 21,
-};
-
-for (const [x, y] of Object.entries(person)) {
-  console.log(x, y);
+function nums(a, b) {
+  if (a > b) console.log('a is bigger');
+  else console.log('b is bigger');
+  return;
+  a + b;
 }
+
+console.log(nums(4, 2));
+console.log(nums(1, 2));
 ```
 
-- A: `name` `Lydia` and `age` `21`
-- B: `["name", "Lydia"]` and `["age", 21]`
-- C: `["name", "age"]` and `undefined`
-- D: `Error`
+- A: `a is bigger`, `6` and `b is bigger`, `3`
+- B: `a is bigger`, `undefined` and `b is bigger`, `undefined`
+- C: `undefined` and `undefined`
+- D: `SyntaxError`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: B
 
-`Object.entries(person)` returns an array of nested arrays, containing the keys and objects:
+In JavaScript, we don't _have_ to write the semicolon (`;`) explicitly, however the JavaScript engine still adds them after statements. This is called **Automatic Semicolon Insertion**. A statement can for example be variables, or keywords like `throw`, `return`, `break`, etc.
 
-`[ [ 'name', 'Lydia' ], [ 'age', 21 ] ]`
+Here, we wrote a `return` statement, and another value `a + b` on a _new line_. However, since it's a new line, the engine doesn't know that it's actually the value that we wanted to return. Instead, it automatically added a semicolon after `return`. You could see this as:
 
-Using the `for-of` loop, we can iterate over each element in the array, the subarrays in this case. We can destructure the subarrays instantly in the for-of loop, using `const [x, y]`. `x` is equal to the first element in the subarray, `y` is equal to the second element in the subarray.
+```javascript
+return;
+a + b;
+```
 
-The first subarray is `[ "name", "Lydia" ]`, with `x` equal to `"name"`, and `y` equal to `"Lydia"`, which get logged.
-The second subarray is `[ "age", 21 ]`, with `x` equal to `"age"`, and `y` equal to `21`, which get logged.
+This means that `a + b` is never reached, since a function stops running after the `return` keyword. If no value gets returned, like here, the function returns `undefined`. Note that there is no automatic insertion after `if/else` statements!
 
 </details>

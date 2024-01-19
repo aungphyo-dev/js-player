@@ -1,35 +1,49 @@
-###### 110. What does this method do?
+###### 112. What's the output?
 
 ```javascript
-JSON.parse();
+function* generatorOne() {
+  yield ['a', 'b', 'c'];
+}
+
+function* generatorTwo() {
+  yield* ['a', 'b', 'c'];
+}
+
+const one = generatorOne();
+const two = generatorTwo();
+
+console.log(one.next().value);
+console.log(two.next().value);
 ```
 
-- A: Parses JSON to a JavaScript value
-- B: Parses a JavaScript object to JSON
-- C: Parses any JavaScript value to JSON
-- D: Parses JSON to a JavaScript object only
+- A: `a` and `a`
+- B: `a` and `undefined`
+- C: `['a', 'b', 'c']` and `a`
+- D: `a` and `['a', 'b', 'c']`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: C
 
-With the `JSON.parse()` method, we can parse JSON string to a JavaScript value.
+With the `yield` keyword, we `yield` values in a generator function. With the `yield*` keyword, we can yield values from another generator function, or iterable object (for example an array).
+
+In `generatorOne`, we yield the entire array `['a', 'b', 'c']` using the `yield` keyword. The value of `value` property on the object returned by the `next` method on `one` (`one.next().value`) is equal to the entire array `['a', 'b', 'c']`.
 
 ```javascript
-// Stringifying a number into valid JSON, then parsing the JSON string to a JavaScript value:
-const jsonNumber = JSON.stringify(4); // '4'
-JSON.parse(jsonNumber); // 4
+console.log(one.next().value); // ['a', 'b', 'c']
+console.log(one.next().value); // undefined
+```
 
-// Stringifying an array value into valid JSON, then parsing the JSON string to a JavaScript value:
-const jsonArray = JSON.stringify([1, 2, 3]); // '[1, 2, 3]'
-JSON.parse(jsonArray); // [1, 2, 3]
+In `generatorTwo`, we use the `yield*` keyword. This means that the first yielded value of `two`, is equal to the first yielded value in the iterator. The iterator is the array `['a', 'b', 'c']`. The first yielded value is `a`, so the first time we call `two.next().value`, `a` is returned.
 
-// Stringifying an object  into valid JSON, then parsing the JSON string to a JavaScript value:
-const jsonArray = JSON.stringify({ name: 'Lydia' }); // '{"name":"Lydia"}'
-JSON.parse(jsonArray); // { name: 'Lydia' }
+```javascript
+console.log(two.next().value); // 'a'
+console.log(two.next().value); // 'b'
+console.log(two.next().value); // 'c'
+console.log(two.next().value); // undefined
 ```
 
 </details>

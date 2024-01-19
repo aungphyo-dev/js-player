@@ -1,23 +1,35 @@
-###### 104. What's its value?
+###### 106. What's its value?
 
 ```javascript
-Promise.resolve(5);
+const colorConfig = {
+  red: true,
+  blue: false,
+  green: true,
+  black: true,
+  yellow: false,
+};
+
+const colors = ['pink', 'red', 'blue'];
+
+console.log(colorConfig.colors[1]);
 ```
 
-- A: `5`
-- B: `Promise {<pending>: 5}`
-- C: `Promise {<fulfilled>: 5}`
-- D: `Error`
+- A: `true`
+- B: `false`
+- C: `undefined`
+- D: `TypeError`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: D
 
-We can pass any type of value we want to `Promise.resolve`, either a promise or a non-promise. The method itself returns a promise with the resolved value (`<fulfilled>`). If you pass a regular function, it'll be a resolved promise with a regular value. If you pass a promise, it'll be a resolved promise with the resolved value of that passed promise.
+In JavaScript, we have two ways to access properties on an object: bracket notation, or dot notation. In this example, we use dot notation (`colorConfig.colors`) instead of bracket notation (`colorConfig["colors"]`).
 
-In this case, we just passed the numerical value `5`. It returns a resolved promise with the value `5`.
+With dot notation, JavaScript tries to find the property on the object with that exact name. In this example, JavaScript tries to find a property called `colors` on the `colorConfig` object. There is no property called `colors`, so this returns `undefined`. Then, we try to access the value of the first element by using `[1]`. We cannot do this on a value that's `undefined`, so it throws a `TypeError`: `Cannot read property '1' of undefined`.
+
+JavaScript interprets (or unboxes) statements. When we use bracket notation, it sees the first opening bracket `[` and keeps going until it finds the closing bracket `]`. Only then, it will evaluate the statement. If we would've used `colorConfig[colors[1]]`, it would have returned the value of the `red` property on the `colorConfig` object.
 
 </details>

@@ -1,29 +1,21 @@
-###### 133. What's the output?
+###### 135. What's the output?
 
 ```javascript
-const myPromise = Promise.resolve(Promise.resolve('Promise'));
+const handler = {
+  set: () => console.log('Added a new property!'),
+  get: () => console.log('Accessed a property!'),
+};
 
-function funcOne() {
-  setTimeout(() => console.log('Timeout 1!'), 0);
-  myPromise.then((res) => res).then((res) => console.log(`${res} 1!`));
-  console.log('Last line 1!');
-}
+const person = new Proxy({}, handler);
 
-async function funcTwo() {
-  const res = await myPromise;
-  console.log(`${res} 2!`);
-  setTimeout(() => console.log('Timeout 2!'), 0);
-  console.log('Last line 2!');
-}
-
-funcOne();
-funcTwo();
+person.name = 'Lydia';
+person.name;
 ```
 
-- A: `Promise 1! Last line 1! Promise 2! Last line 2! Timeout 1! Timeout 2!`
-- B: `Last line 1! Timeout 1! Promise 1! Last line 2! Promise2! Timeout 2! `
-- C: `Last line 1! Promise 2! Last line 2! Promise 1! Timeout 1! Timeout 2!`
-- D: `Timeout 1! Promise 1! Last line 1! Promise 2! Timeout 2! Last line 2!`
+- A: `Added a new property!`
+- B: `Accessed a property!`
+- C: `Added a new property!` `Accessed a property!`
+- D: Nothing gets logged
 
 <details>
 <summary>
@@ -32,18 +24,12 @@ funcTwo();
 
 #### Answer: C
 
-First, we invoke `funcOne`. On the first line of `funcOne`, we call the _asynchronous_ `setTimeout` function, from which the callback is sent to the Web API. (see my article on the event loop <a href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif">here</a>.)
+With a Proxy object, we can add custom behavior to an object that we pass to it as the second argument. In this case, we pass the `handler` object which contained two properties: `set` and `get`. `set` gets invoked whenever we _set_ property values, `get` gets invoked whenever we _get_ (access) property values.
 
-Then we call the `myPromise` promise, which is an _asynchronous_ operation.
+The first argument is an empty object `{}`, which is the value of `person`. To this object, the custom behavior specified in the `handler` object gets added. If we add a property to the `person` object, `set` will get invoked. If we access a property on the `person` object, `get` gets invoked.
 
-Both the promise and the timeout are asynchronous operations, the function keeps on running while it's busy completing the promise and handling the `setTimeout` callback. This means that `Last line 1!` gets logged first, since this is not an asynchonous operation.
+First, we added a new property `name` to the proxy object (`person.name = "Lydia"`). `set` gets invoked, and logs `"Added a new property!"`.
 
-Since the callstack is not empty yet, the `setTimeout` function and promise in `funcOne` cannot get added to the callstack yet.
-
-In `funcTwo`, the variable `res` gets `Promise` because `Promise.resolve(Promise.resolve('Promise'))` is equivalent to `Promise.resolve('Promise')` since resolving a promise just resolves it's value. The `await` in this line stops the execution of the function until it receives the resolution of the promise and then keeps on running synchronously until completion, so `Promise 2!` and then `Last line 2!` are logged and the `setTimeout` is sent to the Web API.
-
-Then the call stack is empty. Promises are _microtasks_ so they are resolved first when the call stack is empty so `Promise 1!` gets to be logged.
-
-Now, since `funcTwo` popped off the call stack, the call stack is empty. The callbacks waiting in the queue (`() => console.log("Timeout 1!")` from `funcOne`, and `() => console.log("Timeout 2!")` from `funcTwo`) get added to the call stack one by one. The first callback logs `Timeout 1!`, and gets popped off the stack. Then, the second callback logs `Timeout 2!`, and gets popped off the stack.
+Then, we access a property value on the proxy object, the `get` property on the handler object got invoked. `"Accessed a property!"` gets logged.
 
 </details>

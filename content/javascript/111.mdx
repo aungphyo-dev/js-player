@@ -1,17 +1,19 @@
-###### 109. What's the output?
+###### 111. What's the output?
 
 ```javascript
-const food = ['🍕', '🍫', '🥑', '🍔'];
-const info = { favoriteFood: food[0] };
+let name = 'Lydia';
 
-info.favoriteFood = '🍝';
+function getName() {
+  console.log(name);
+  let name = 'Sarah';
+}
 
-console.log(food);
+getName();
 ```
 
-- A: `['🍕', '🍫', '🥑', '🍔']`
-- B: `['🍝', '🍫', '🥑', '🍔']`
-- C: `['🍝', '🍕', '🍫', '🥑', '🍔']`
+- A: Lydia
+- B: Sarah
+- C: `undefined`
 - D: `ReferenceError`
 
 <details>
@@ -19,12 +21,22 @@ console.log(food);
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: D
 
-We set the value of the `favoriteFood` property on the `info` object equal to the string with the pizza emoji, `'🍕'`. A string is a primitive data type. In JavaScript, primitive data types don't interact by reference.
+Each function has its own _execution context_ (or _scope_). The `getName` function first looks within its own context (scope) to see if it contains the variable `name` we're trying to access. In this case, the `getName` function contains its own `name` variable: we declare the variable `name` with the `let` keyword, and with the value of `'Sarah'`.
 
-In JavaScript, primitive data types (everything that's not an object) interact by _value_. In this case, we set the value of the `favoriteFood` property on the `info` object equal to the value of the first element in the `food` array, the string with the pizza emoji in this case (`'🍕'`). A string is a primitive data type, and interact by value (see my [blogpost](https://www.theavocoder.com/complete-javascript/2018/12/21/by-value-vs-by-reference) if you're interested in learning more)
+Variables with the `let` keyword (and `const`) are hoisted, but unlike `var`, don't get <i>initialized</i>. They are not accessible before the line we declare (initialize) them. This is called the "temporal dead zone". When we try to access the variables before they are declared, JavaScript throws a `ReferenceError`.
 
-Then, we change the value of the `favoriteFood` property on the `info` object. The `food` array hasn't changed, since the value of `favoriteFood` was merely a _copy_ of the value of the first element in the array, and doesn't have a reference to the same spot in memory as the element on `food[0]`. When we log food, it's still the original array, `['🍕', '🍫', '🥑', '🍔']`.
+If we wouldn't have declared the `name` variable within the `getName` function, the javascript engine would've looked down the _scope chain_. The outer scope has a variable called `name` with the value of `Lydia`. In that case, it would've logged `Lydia`.
+
+```javascript
+let name = 'Lydia';
+
+function getName() {
+  console.log(name);
+}
+
+getName(); // Lydia
+```
 
 </details>

@@ -1,21 +1,17 @@
-###### 92. What's the output?
+###### 94. What's the output?
 
 ```javascript
-function giveLydiaPizza() {
-  return 'Here is pizza!';
+function getItems(fruitList, ...args, favoriteFruit) {
+  return [...fruitList, ...args, favoriteFruit]
 }
 
-const giveLydiaChocolate = () =>
-  "Here's chocolate... now go hit the gym already.";
-
-console.log(giveLydiaPizza.prototype);
-console.log(giveLydiaChocolate.prototype);
+getItems(["banana", "apple"], "pear", "orange")
 ```
 
-- A: `{ constructor: ...}` `{ constructor: ...}`
-- B: `{}` `{ constructor: ...}`
-- C: `{ constructor: ...}` `{}`
-- D: `{ constructor: ...}` `undefined`
+- A: `["banana", "apple", "pear", "orange"]`
+- B: `[["banana", "apple"], "pear", "orange"]`
+- C: `["banana", "apple", ["pear"], "orange"]`
+- D: `SyntaxError`
 
 <details>
 <summary>
@@ -24,6 +20,16 @@ console.log(giveLydiaChocolate.prototype);
 
 #### Answer: D
 
-Regular functions, such as the `giveLydiaPizza` function, have a `prototype` property, which is an object (prototype object) with a `constructor` property. Arrow functions however, such as the `giveLydiaChocolate` function, do not have this `prototype` property. `undefined` gets returned when trying to access the `prototype` property using `giveLydiaChocolate.prototype`.
+`...args` is a rest parameter. The rest parameter's value is an array containing all remaining arguments, **and can only be the last parameter**! In this example, the rest parameter was the second parameter. This is not possible, and will throw a syntax error.
+
+```javascript
+function getItems(fruitList, favoriteFruit, ...args) {
+  return [...fruitList, ...args, favoriteFruit];
+}
+
+getItems(['banana', 'apple'], 'pear', 'orange');
+```
+
+The above example works. This returns the array `[ 'banana', 'apple', 'orange', 'pear' ]`
 
 </details>

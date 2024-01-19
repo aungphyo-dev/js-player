@@ -1,23 +1,30 @@
-###### 87. What's the output?
+###### 89. What's the output?
 
 ```javascript
-console.log('I want pizza'[0]);
+// module.js
+export default () => 'Hello world';
+export const name = 'Lydia';
+
+// index.js
+import * as data from './module';
+
+console.log(data);
 ```
 
-- A: `"""`
-- B: `"I"`
-- C: `SyntaxError`
-- D: `undefined`
+- A: `{ default: function default(), name: "Lydia" }`
+- B: `{ default: function default() }`
+- C: `{ default: "Hello world", name: "Lydia" }`
+- D: Global object of `module.js`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: B
+#### Answer: A
 
-In order to get a character at a specific index of a string, you can use bracket notation. The first character in the string has index 0, and so on. In this case, we want to get the element with index 0, the character `"I'`, which gets logged.
+With the `import * as name` syntax, we import _all exports_ from the `module.js` file into the `index.js` file as a new object called `data` is created. In the `module.js` file, there are two exports: the default export, and a named export. The default export is a function which returns the string `"Hello World"`, and the named export is a variable called `name` which has the value of the string `"Lydia"`.
 
-Note that this method is not supported in IE7 and below. In that case, use `.charAt()`.
+The `data` object has a `default` property for the default export, other properties have the names of the named exports and their corresponding values.
 
 </details>

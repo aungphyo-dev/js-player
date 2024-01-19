@@ -1,56 +1,25 @@
-###### 134. How can we invoke `sum` in `sum.js` from `index.js?`
+###### 136. Which of the following will modify the `person` object?
 
 ```javascript
-// sum.js
-export default function sum(x) {
-  return x + x;
-}
+const person = { name: 'Lydia Hallie' };
 
-// index.js
-import * as sum from './sum';
+Object.seal(person);
 ```
 
-- A: `sum(4)`
-- B: `sum.sum(4)`
-- C: `sum.default(4)`
-- D: Default aren't imported with `*`, only named exports
+- A: `person.name = "Evan Bacon"`
+- B: `person.age = 21`
+- C: `delete person.name`
+- D: `Object.assign(person, { age: 21 })`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: A
 
-With the asterisk `*`, we import all exported values from that file, both default and named. If we had the following file:
+With `Object.seal` we can prevent new properties from being _added_, or existing properties to be _removed_.
 
-```javascript
-// info.js
-export const name = 'Lydia';
-export const age = 21;
-export default 'I love JavaScript';
-
-// index.js
-import * as info from './info';
-console.log(info);
-```
-
-The following would get logged:
-
-```javascript
-{
-  default: "I love JavaScript",
-  name: "Lydia",
-  age: 21
-}
-```
-
-For the `sum` example, it means that the imported value `sum` looks like this:
-
-```javascript
-{ default: function sum(x) { return x + x } }
-```
-
-We can invoke this function, by calling `sum.default`
+However, you can still modify the value of existing properties.
 
 </details>

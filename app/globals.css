@@ -39,7 +39,7 @@
 }
 
 .prose pre {
-  @apply overflow-x-auto rounded-lg border border-neutral-900 bg-[#18203A];
+  @apply overflow-x-auto rounded-lg border border-neutral-800 bg-slate-900/85;
 }
 
 .prose code {

@@ -16,6 +16,7 @@ const Page = () => {
       </div>
       <h1>JavaScript Questions</h1>
       <h5 className='font-semibold text-neutral-300'>[!NOTE]</h5>
+      <br />
       {`This repo was created in 2019 and the questions provided here are therefore based on the JavaScript syntax
                 and behaviour at that time. Since JavaScript is a constantly evolving language, there are newer language
                 features that are not covered by the questions here.`}
@@ -32,6 +33,11 @@ const Page = () => {
         {`| Feel free to use them in a project! 😃 I would _really_ appreciate a reference to this repo, I create
                     the questions and explanations (yes I'm sad lol) and the community helps me so much to maintain and
                     improve it! 💪🏼 Thank you and have fun!`}
+        <br/>
+        <br/>
+        <a href="https://github.com/aungpyaephyo1412/javascript-questions">
+          Source Code
+        </a>
       </p>
     </div>
   );

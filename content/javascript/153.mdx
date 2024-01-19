@@ -1,29 +1,32 @@
-###### 151. What's the output?
+###### 153. What should the value of `method` be to log `{ name: "Lydia", age: 22 }`?
 
 ```javascript
-const user = {
-  email: 'my@email.com',
-  updateEmail: (email) => {
-    this.email = email;
-  },
-};
+const keys = ['name', 'age'];
+const values = ['Lydia', 22];
 
-user.updateEmail('new@email.com');
-console.log(user.email);
+const method =
+  /* ?? */
+  Object[method](
+    keys.map((_, i) => {
+      return [keys[i], values[i]];
+    })
+  ); // { name: "Lydia", age: 22 }
 ```
 
-- A: `my@email.com`
-- B: `new@email.com`
-- C: `undefined`
-- D: `ReferenceError`
+- A: `entries`
+- B: `values`
+- C: `fromEntries`
+- D: `forEach`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: C
 
-The `updateEmail` function is an arrow function, and is not bound to the `user` object. This means that the `this` keyword is not referring to the `user` object, but refers to the global scope in this case. The value of `email` within the `user` object does not get updated. When logging the value of `user.email`, the original value of `my@email.com` gets returned.
+The `fromEntries` method turns a 2d array into an object. The first element in each subarray will be the key, and the second element in each subarray will be the value. In this case, we’re mapping over the `keys` array, which returns an array which first element is the item on the key array on the current index, and the second element is the item of the values array on the current index.
+
+This creates an array of subarrays containing the correct keys and values, which results in `{ name: "Lydia", age: 22 }`
 
 </details>

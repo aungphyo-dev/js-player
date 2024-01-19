@@ -1,30 +1,35 @@
-###### 108. Which of these methods modifies the original array?
+###### 110. What does this method do?
 
 ```javascript
-const emojis = ['✨', '🥑', '😍'];
-
-emojis.map((x) => x + '✨');
-emojis.filter((x) => x !== '🥑');
-emojis.find((x) => x !== '🥑');
-emojis.reduce((acc, cur) => acc + '✨');
-emojis.slice(1, 2, '✨');
-emojis.splice(1, 2, '✨');
+JSON.parse();
 ```
 
-- A: `All of them`
-- B: `map` `reduce` `slice` `splice`
-- C: `map` `slice` `splice`
-- D: `splice`
+- A: Parses JSON to a JavaScript value
+- B: Parses a JavaScript object to JSON
+- C: Parses any JavaScript value to JSON
+- D: Parses JSON to a JavaScript object only
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: D
+#### Answer: A
 
-With `splice` method, we modify the original array by deleting, replacing or adding elements. In this case, we removed 2 items from index 1 (we removed `'🥑'` and `'😍'`) and added the ✨ emoji instead.
+With the `JSON.parse()` method, we can parse JSON string to a JavaScript value.
 
-`map`, `filter` and `slice` return a new array, `find` returns an element, and `reduce` returns a reduced value.
+```javascript
+// Stringifying a number into valid JSON, then parsing the JSON string to a JavaScript value:
+const jsonNumber = JSON.stringify(4); // '4'
+JSON.parse(jsonNumber); // 4
+
+// Stringifying an array value into valid JSON, then parsing the JSON string to a JavaScript value:
+const jsonArray = JSON.stringify([1, 2, 3]); // '[1, 2, 3]'
+JSON.parse(jsonArray); // [1, 2, 3]
+
+// Stringifying an object  into valid JSON, then parsing the JSON string to a JavaScript value:
+const jsonArray = JSON.stringify({ name: 'Lydia' }); // '{"name":"Lydia"}'
+JSON.parse(jsonArray); // { name: 'Lydia' }
+```
 
 </details>

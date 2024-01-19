@@ -1,30 +1,25 @@
-###### 89. What's the output?
+###### 91. What's the output?
 
 ```javascript
-// module.js
-export default () => 'Hello world';
-export const name = 'Lydia';
+let newList = [1, 2, 3].push(4);
 
-// index.js
-import * as data from './module';
-
-console.log(data);
+console.log(newList.push(5));
 ```
 
-- A: `{ default: function default(), name: "Lydia" }`
-- B: `{ default: function default() }`
-- C: `{ default: "Hello world", name: "Lydia" }`
-- D: Global object of `module.js`
+- A: `[1, 2, 3, 4, 5]`
+- B: `[1, 2, 3, 5]`
+- C: `[1, 2, 3, 4]`
+- D: `Error`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: A
+#### Answer: D
 
-With the `import * as name` syntax, we import _all exports_ from the `module.js` file into the `index.js` file as a new object called `data` is created. In the `module.js` file, there are two exports: the default export, and a named export. The default export is a function which returns the string `"Hello World"`, and the named export is a variable called `name` which has the value of the string `"Lydia"`.
+The `.push` method returns the _new length_ of the array, not the array itself! By setting `newList` equal to `[1, 2, 3].push(4)`, we set `newList` equal to the new length of the array: `4`.
 
-The `data` object has a `default` property for the default export, other properties have the names of the named exports and their corresponding values.
+Then, we try to use the `.push` method on `newList`. Since `newList` is the numerical value `4`, we cannot use the `.push` method: a TypeError is thrown.
 
 </details>

@@ -1,20 +1,23 @@
-###### 128. What's the output?
+###### 130. What's the output?
 
 ```javascript
-const name = 'Lydia Hallie';
-const age = 21;
+const myPromise = Promise.resolve('Woah some cool data');
 
-console.log(Number.isNaN(name));
-console.log(Number.isNaN(age));
-
-console.log(isNaN(name));
-console.log(isNaN(age));
+(async () => {
+  try {
+    console.log(await myPromise);
+  } catch {
+    throw new Error(`Oops didn't work`);
+  } finally {
+    console.log('Oh finally!');
+  }
+})();
 ```
 
-- A: `true` `false` `true` `false`
-- B: `true` `false` `false` `false`
-- C: `false` `false` `true` `false`
-- D: `false` `true` `false` `true`
+- A: `Woah some cool data`
+- B: `Oh finally!`
+- C: `Woah some cool data` `Oh finally!`
+- D: `Oops didn't work` `Oh finally!`
 
 <details>
 <summary>
@@ -23,8 +26,6 @@ console.log(isNaN(age));
 
 #### Answer: C
 
-With the `Number.isNaN` method, you can check if the value you pass is a _numeric value_ and equal to `NaN`. `name` is not a numeric value, so `Number.isNaN(name)` returns `false`. `age` is a numeric value, but is not equal to `NaN`, so `Number.isNaN(age)` returns `false`.
-
-With the `isNaN` method, you can check if the value you pass is not a number. `name` is not a number, so `isNaN(name)` returns true. `age` is a number, so `isNaN(age)` returns `false`.
+In the `try` block, we're logging the awaited value of the `myPromise` variable: `"Woah some cool data"`. Since no errors were thrown in the `try` block, the code in the `catch` block doesn't run. The code in the `finally` block _always_ runs, `"Oh finally!"` gets logged.
 
 </details>

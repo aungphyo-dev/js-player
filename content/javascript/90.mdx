@@ -1,27 +1,36 @@
-###### 88. What's the output?
+###### 90. What's the output?
 
 ```javascript
-function sum(num1, num2 = num1) {
-  console.log(num1 + num2);
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
 }
 
-sum(10);
+const member = new Person('John');
+console.log(typeof member);
 ```
 
-- A: `NaN`
-- B: `20`
-- C: `ReferenceError`
-- D: `undefined`
+- A: `"class"`
+- B: `"function"`
+- C: `"object"`
+- D: `"string"`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: B
+#### Answer: C
 
-You can set a default parameter's value equal to another parameter of the function, as long as they've been defined _before_ the default parameter. We pass the value `10` to the `sum` function. If the `sum` function only receives 1 argument, it means that the value for `num2` is not passed, and the value of `num1` is equal to the passed value `10` in this case. The default value of `num2` is the value of `num1`, which is `10`. `num1 + num2` returns `20`.
+Classes are syntactical sugar for function constructors. The equivalent of the `Person` class as a function constructor would be:
 
-If you're trying to set a default parameter's value equal to a parameter which is defined _after_ (to the right), the parameter's value hasn't been initialized yet, which will throw an error.
+```javascript
+function Person(name) {
+  this.name = name;
+}
+```
+
+Calling a function constructor with `new` results in the creation of an instance of `Person`, `typeof` keyword returns `"object"` for an instance. `typeof member` returns `"object"`.
 
 </details>

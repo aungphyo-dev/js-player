@@ -1,24 +1,28 @@
-###### 127. What's the output?
+###### 129. What's the output?
 
 ```javascript
-const spookyItems = ['👻', '🎃', '🕸'];
-({ item: spookyItems[3] } = { item: '💀' });
+const randomValue = 21;
 
-console.log(spookyItems);
+function getInfo() {
+  console.log(typeof randomValue);
+  const randomValue = 'Lydia Hallie';
+}
+
+getInfo();
 ```
 
-- A: `["👻", "🎃", "🕸"]`
-- B: `["👻", "🎃", "🕸", "💀"]`
-- C: `["👻", "🎃", "🕸", { item: "💀" }]`
-- D: `["👻", "🎃", "🕸", "[object Object]"]`
+- A: `"number"`
+- B: `"string"`
+- C: `undefined`
+- D: `ReferenceError`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: B
+#### Answer: D
 
-By destructuring objects, we can unpack values from the right-hand object, and assign the unpacked value to the value of the same property name on the left-hand object. In this case, we're assigning the value "💀" to `spookyItems[3]`. This means that we're modifying the `spookyItems` array, we're adding the "💀" to it. When logging `spookyItems`, `["👻", "🎃", "🕸", "💀"]` gets logged.
+Variables declared with the `const` keyword are not referenceable before their initialization: this is called the _temporal dead zone_. In the `getInfo` function, the variable `randomValue` is scoped in the functional scope of `getInfo`. On the line where we want to log the value of `typeof randomValue`, the variable `randomValue` isn't initialized yet: a `ReferenceError` gets thrown! The engine didn't go down the scope chain since we declared the variable `randomValue` in the `getInfo` function.
 
 </details>

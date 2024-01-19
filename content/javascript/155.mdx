@@ -1,32 +1,30 @@
-###### 153. What should the value of `method` be to log `{ name: "Lydia", age: 22 }`?
+###### 155. What's the output?
 
 ```javascript
-const keys = ['name', 'age'];
-const values = ['Lydia', 22];
+let randomValue = { name: 'Lydia' };
+randomValue = 23;
 
-const method =
-  /* ?? */
-  Object[method](
-    keys.map((_, i) => {
-      return [keys[i], values[i]];
-    })
-  ); // { name: "Lydia", age: 22 }
+if (!typeof randomValue === 'string') {
+  console.log("It's not a string!");
+} else {
+  console.log("Yay it's a string!");
+}
 ```
 
-- A: `entries`
-- B: `values`
-- C: `fromEntries`
-- D: `forEach`
+- A: `It's not a string!`
+- B: `Yay it's a string!`
+- C: `TypeError`
+- D: `undefined`
 
 <details>
 <summary>
 <b>Answer</b>
 </summary>
 
-#### Answer: C
+#### Answer: B
 
-The `fromEntries` method turns a 2d array into an object. The first element in each subarray will be the key, and the second element in each subarray will be the value. In this case, we’re mapping over the `keys` array, which returns an array which first element is the item on the key array on the current index, and the second element is the item of the values array on the current index.
+The condition within the `if` statement checks whether the value of `!typeof randomValue` is equal to `"string"`. The `!` operator converts the value to a boolean value. If the value is truthy, the returned value will be `false`, if the value is falsy, the returned value will be `true`. In this case, the returned value of `typeof randomValue` is the truthy value `"number"`, meaning that the value of `!typeof randomValue` is the boolean value `false`.
 
-This creates an array of subarrays containing the correct keys and values, which results in `{ name: "Lydia", age: 22 }`
+`!typeof randomValue === "string"` always returns false, since we're actually checking `false === "string"`. Since the condition returned `false`, the code block of the `else` statement gets run, and `Yay it's a string!` gets logged.
 
 </details>

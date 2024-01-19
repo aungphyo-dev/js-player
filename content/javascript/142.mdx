@@ -1,32 +1,26 @@
-###### 140. What's missing?
+###### 142. What's the output?
 
 ```javascript
-const teams = [
-  { name: 'Team 1', members: ['Paul', 'Lisa'] },
-  { name: 'Team 2', members: ['Laura', 'Tim'] },
-];
-
-function* getMembers(members) {
-  for (let i = 0; i < members.length; i++) {
-    yield members[i];
+class Bird {
+  constructor() {
+    console.log("I'm a bird. 🦢");
   }
 }
 
-function* getTeams(teams) {
-  for (let i = 0; i < teams.length; i++) {
-    // ✨ SOMETHING IS MISSING HERE ✨
+class Flamingo extends Bird {
+  constructor() {
+    console.log("I'm pink. 🌸");
+    super();
   }
 }
 
-const obj = getTeams(teams);
-obj.next(); // { value: "Paul", done: false }
-obj.next(); // { value: "Lisa", done: false }
+const pet = new Flamingo();
 ```
 
-- A: `yield getMembers(teams[i].members)`
-- B: `yield* getMembers(teams[i].members)`
-- C: `return getMembers(teams[i].members)`
-- D: `return yield getMembers(teams[i].members)`
+- A: `I'm pink. 🌸`
+- B: `I'm pink. 🌸` `I'm a bird. 🦢`
+- C: `I'm a bird. 🦢` `I'm pink. 🌸`
+- D: Nothing, we didn't call any method
 
 <details>
 <summary>
@@ -35,8 +29,6 @@ obj.next(); // { value: "Lisa", done: false }
 
 #### Answer: B
 
-In order to iterate over the `members` in each element in the `teams` array, we need to pass `teams[i].members` to the `getMembers` generator function. The generator function returns a generator object. In order to iterate over each element in this generator object, we need to use `yield*`.
-
-If we would've written `yield`, `return yield`, or `return`, the entire generator function would've gotten returned the first time we called the `next` method.
+We create the variable `pet` which is an instance of the `Flamingo` class. When we instantiate this instance, the `constructor` on `Flamingo` gets called. First, `"I'm pink. 🌸"` gets logged, after which we call `super()`. `super()` calls the constructor of the parent class, `Bird`. The constructor in `Bird` gets called, and logs `"I'm a bird. 🦢"`.
 
 </details>
